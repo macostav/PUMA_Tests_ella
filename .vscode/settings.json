@@ -1,5 +1,6 @@
 {
     "files.associations": {
-        "shapes.C": "cpp"
+        "shapes.C": "cpp",
+        "ElectronDrift.C": "cpp"
     }
 }
