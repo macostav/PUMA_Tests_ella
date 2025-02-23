@@ -25,3 +25,8 @@
 #include "Garfield/ViewField.hh"
 #include "Garfield/ViewFEMesh.hh"
 #include "Garfield/ViewMedium.hh"
+
+int main() {
+
+    return 0;
+}
