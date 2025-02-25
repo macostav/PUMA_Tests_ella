@@ -1,2 +1,1 @@
-5 blah
-finish this
+6 1e10 1 6.9 1e10 2.5 2.1
