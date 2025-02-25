@@ -26,7 +26,19 @@
 #include "Garfield/ViewFEMesh.hh"
 #include "Garfield/ViewMedium.hh"
 
+using namespace Garfield;
+
 int main() {
+    //Initialize application and canvas
+    TApplication app("app", nullptr, nullptr);
+    TCanvas canvas("Canvas", "Drift", 800, 800);
+
+    //Import COMSOL model
+    ComponentComsol pumaModel;
+    pumaModel.Initialise("/data/emajkic/mesh_export_feb21.txt", "Garfield/Simulations/dielectric.dat", "/data/emajkic/data_export_feb21.txt", "mm");
+    pumaModel.PrintRange;
+
+    //Dimensions
 
     return 0;
 }
