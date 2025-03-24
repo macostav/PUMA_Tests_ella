@@ -85,7 +85,7 @@ int main() {
     std::mt19937 rng;
     std::uniform_real_distribution<double> distX(-5, 5);
     std::uniform_real_distribution<double> distY(-5, 5);
-    std::uniform_real_distribution<double> distZ(43.5, 43.535);
+    std::uniform_real_distribution<double> distZ(-16, 7);
  
     for (int i = 0; i < 1000; ++i) {
         double x0 = distX(rng);
@@ -93,11 +93,12 @@ int main() {
         double z0 = distZ(rng);
         double t0 = 0.0;
          
-        avalanche.Clear();
-        avalanche.AvalancheElectron(x0, y0, z0, t0);
+        avalanche.AvalancheElectron(x0, y0, z0, t0, 0.0, 0.0, 0.0, 0.0);
          
         double xf, yf, zf, tf;
-        avalanche.GetElectronEndpoint(0, x0, y0, z0, t0, xf, yf, zf, tf);
+        double energy, dx, dy, dz;  // Capture additional output values
+        int status;  // Status flag
+        avalanche.GetElectronEndpoint(0, x0, y0, z0, t0, xf, yf, zf, tf, energy, dx, dy, dz, status);
          
         double driftTime = tf - t0;
         double driftDistance = std::sqrt((xf - x0) * (xf - x0) + (yf - y0) * (yf - y0) + (zf - z0) * (zf - z0));
