@@ -1,6 +1,7 @@
 {
     "files.associations": {
         "shapes.C": "cpp",
-        "ElectronDrift.C": "cpp"
+        "ElectronDrift.C": "cpp",
+        "ElectronDrift_2.C": "cpp"
     }
 }
