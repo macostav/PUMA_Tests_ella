@@ -2,7 +2,9 @@
 By Ella Majkic - TRIUMF Co-Op Jan-Apr 2025
 
 A purity monitor assembly (PUMA) is needed for experiments such as PIONEER, nEXO, and LolX to measure the amount of impurity in liquid xenon. This is improtant for precise measurement as these impurities will affect the light yield in LXe based scintillators. For example, PIONEER is a rare pion decay experiment measuring the ratio $R_{e/ \mu}$ between pion $\pi^{+}$ decay to positron $e^{+}$ and decay to muon $\mu^{+}$:
-$$R_{e/ \mu} = \frac{\pi^{+} \rightarrow e^{+}\nu_{e}(\gamma)}{} $$
+
+$$R_{e/ \mu} = \frac{\pi^{+} \rightarrow e^{+}\nu_{e}(\gamma)}{\pi^{+} \rightarrow \mu^{+}\nu_{\mu}(\gamma)} $$
+
 Measurement of $R_{e/ \mu}$ informs potential new physics and addresses unanswered questions in the flavour sector.
 
 
