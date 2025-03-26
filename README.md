@@ -14,8 +14,8 @@ The goal of the testing phase was to analyze the function of little PUMA in vacu
 
 This repository contains:
 
-a) Simulations with COMSOL model of PUMA (Purity Monitor Assembly) using the Garfield++ library to gain insight about how electrons drift in PUMA;
+- Simulations with COMSOL model of PUMA (Purity Monitor Assembly) using the Garfield++ library to gain insight about how electrons drift in PUMA;
 
-b) Images and setup of vacuum system designed for PUMA calibration assembly tests;
+- Images and setup of vacuum system designed for PUMA calibration assembly tests;
 
-c) Schematic for electrical box used to connect vacuum pressure gauge to data collection devices.
+- Schematic for electrical box used to connect vacuum pressure gauge to data collection devices.
