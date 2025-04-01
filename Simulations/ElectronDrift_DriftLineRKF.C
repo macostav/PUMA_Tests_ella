@@ -55,21 +55,12 @@ int main() {
     constexpr bool plotting = true;
     constexpr bool debug = true;
 
-    //Initialize application and canvas
     TApplication app("app", nullptr, nullptr);
 
     //Import COMSOL model
     ComponentComsol pumaModel;
-    pumaModel.Initialise("/data/emajkic/mesh_export_feb21.mphtxt", "/home/emajkic/PUMA_Tests/Simulations/dielectric.dat", "/data/emajkic/data_export_feb21.txt", "mm");
-
-    if (debug) {
-      std::ifstream file("/data/emajkic/mesh_export_feb21.mphtxt");
-      if (!file) {
-      std::cerr << "Error: mesh_export_feb21.mphtxt not found!" << std::endl;
-      return 1;
-    }
-
-    }
+    pumaModel.Initialise("/data/emajkic/mesh_export_feb21.mphtxt", "/home/emajkic/PUMA_Tests/Simulations/dielectric.txt", "/data/emajkic/data_export_feb21.txt", "mm");
+  
     //Visualize field
     if (plotting) {
         ViewField fieldView;
@@ -80,98 +71,55 @@ int main() {
         
         TCanvas* canvas1 = new TCanvas("Canvas", "Electric Field", 800, 800);
         fieldView.SetCanvas(canvas1);
-        fieldView.PlotContour();
+        fieldView.Plot("emag", "colz");
+    }
+
+    if (debug) {
+      pumaModel.PrintRange();
+      pumaModel.PrintMaterials();
     }
 
     //Define gas medium
     MediumMagboltz gas;
     gas.SetTemperature(293.15);
     gas.SetPressure(760.0);
-    gas.SetComposition("ar", 100.);
+    gas.SetComposition("Ar", 100.);
     gas.LoadIonMobility("IonMobility_Ar+_Ar.txt");
+    bool loaded = gas.LoadGasFile("argon_table.gas");
+    if (!loaded) {
+      gas.GenerateGasTable(5, false);
+      gas.WriteGasFile("argon_table.gas");
+    } 
     gas.Initialise(true);
 
     //Attatch medium to PUMA model
     pumaModel.SetMedium(4, &gas);
 
     if (debug) {
-        pumaModel.PrintRange();
-        pumaModel.PrintMaterials();
-        std::cout << "Model Initialized \n";
+      // To view e+ velocity
+      ViewMedium mediumView;
+      mediumView.SetMedium(&gas);
+      mediumView.PlotElectronVelocity('e');
     }
 
-    //Set up a sensor
-    Sensor sensor;
-    sensor.AddComponent(&pumaModel);
-    sensor.SetArea(-5, -5, -16, 5, 5, 7); //[cm]
+    // //Set up a sensor
+    // Sensor sensor;
+    // sensor.AddComponent(&pumaModel);
+    // sensor.SetArea(-5, -5, -16, 5, 5, 7); //[cm]
 
-    if (debug) {
-      std::cout << "Sensor Initialized \n";
-    }
-
-    //Send electrons from cathode into drift region
-    DriftLineRKF driftline;
-    driftline.SetSensor(&sensor);
-    
-    //TCanvas* cD = new TCanvas("Drift Canvas", "Canvas", 800, 800);
-
-    // ViewDrift driftView;
-    // driftView.SetCanvas(cD);
-    // driftline.EnablePlotting(&driftView);
-    
-    //1 electron
-    driftline.DriftElectron(0, 0, 4.5, 0); //NO E FIELD EHRE THATS THE PRIBLEM.... CHECK IMPORT?
-
-    double xf, yf, zf, tf;
-    int status;
+    // if (debug) {
+    //   std::cout << "Sensor Initialized \n";
+    // }
   
-    driftline.GetEndPoint(xf, yf, zf, tf, status);
-    driftline.PrintDriftLine();
 
-    if (debug) {
-      std::cout << "status: " << status << " xf: " << xf << " yf: "<< yf << " zf: " << zf << " tf: " << tf << "\n" << std::endl;
-    }
-        
 
-    /*
-    int nRuns = 10;
-    
 
-    for (int i = 0; i < nRuns; i++) {
-      auto [x0, y0] = randInCircle(); //extract x0 and y0 from my method
-      const double z0 = 4.52; //[cm] few mm below cathode - from STEP CAD file measurement
-      //std::cout << "x0: " << x0 << " y0: "<< y0 << " z0: " << z0 << "\n" << std::endl;
 
-      //check if e-field exists
-      if (debug) {
-        double ex, ey, ez;
-        Garfield::Medium* m = nullptr;  // Pointer to store the medium
-        int status = 0;
 
-        pumaModel.ElectricField(x0, y0, z0, ex, ey, ez, m, status);
-
-        std::cout << "E-field at (" << x0 << ", " << y0 << ", " << z0 << "): "
-          << ex << " " << ey << " " << ez << " Status: " << status << std::endl;
-      }
-
-      driftline.DriftElectron(x0, y0, z0, 0);
-
-      double xf, yf, zf, tf;
-      int status;
-
-      driftline.GetEndPoint(xf, yf, zf, tf, status);
-
-      if (debug) {
-        std::cout << "status: " << status << " xf: " << xf << " yf: "<< yf << " zf: " << zf << " tf: " << tf << "\n" << std::endl;
-      }
-      
-
-      //CALCULATE SPEED VIA s = d/t
-      //plot hsitrogram of speeds?..
-      //for now just drew drift line, ok dont need this but just sanity check
-    }*/  
-
-   // driftView.Plot();
+    //CALCULATE SPEED VIA s = d/t
+    //plot hsitrogram of speeds?..
+    //for now just drew drift line, ok dont need this but just sanity check
+   
       
     app.Run();
     

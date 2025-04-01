@@ -5,6 +5,8 @@
         "ElectronDrift_2.C": "cpp",
         "ElectronDrift_Avalanche.C": "cpp",
         "ElectronDrift_DriftLineRKF.C": "cpp",
-        "ComsolIntegrationTest.C": "cpp"
+        "ComsolIntegrationTest.C": "cpp",
+        "pmsim.C": "cpp",
+        "pmtry.C": "cpp"
     }
 }
