@@ -1,4 +1,4 @@
-## Repository for PUMA Testing Phase
+## Repository for PUMA/little PUMA Testing Phase
 *By Ella Majkic - TRIUMF Co-Op Jan-Apr 2025*
 
 A **purity monitor assembly (PUMA)** is needed for experiments such as PIONEER, nEXO, and LolX to measure the amount of impurity in liquid xenon (LXe). This is improtant for precise measurement as these impurities will affect the light yield in LXe based scintillators. For example, PIONEER is a rare pion decay experiment measuring $R_{e/ \mu}$, the ratio between pion ($\pi^{+}$) decay to positron ($e^{+}$) and pion decay to muon ($\mu^{+}$):
