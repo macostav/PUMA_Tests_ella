@@ -30,7 +30,7 @@
 using namespace Garfield;
 
 std::pair<double, double> randInCircle() {
-  double radiusCathode = 0.5; 
+  double radiusCathode = 0.5; //[cm]
   double radiusElectrons = radiusCathode/3.0;
 
   std::random_device rd;
@@ -52,31 +52,32 @@ std::pair<double, double> randInCircle() {
 // use [cm] inputs
 
 int main() {
-    constexpr bool plotting = true;
-    constexpr bool debug = true;
+    bool plotting = true;
+    bool debug = true;
 
     TApplication app("app", nullptr, nullptr);
 
     //Import COMSOL model
     ComponentComsol pumaModel;
-    pumaModel.Initialise("/data/emajkic/mesh_export_feb21.mphtxt", "/home/emajkic/PUMA_Tests/Simulations/dielectric.txt", "/data/emajkic/data_export_feb21.txt", "mm");
+    pumaModel.Initialise("/data/emajkic/mesh_export_feb21.mphtxt", "/home/emajkic/PUMA_Tests/Simulations/dielectric_py.txt", "/data/emajkic/data_export_feb21.txt", "mm");
   
-    //Visualize field
-    if (plotting) {
-        ViewField fieldView;
-        fieldView.SetComponent(&pumaModel);
-        fieldView.SetPlane(0, -1, 0, 0, 0, 0); //xz plane ?
-        fieldView.SetArea(-5, 0, 5, 6.5); //[cm]
-        fieldView.SetVoltageRange(-1700., 0.);
-        
-        TCanvas* canvas1 = new TCanvas("Canvas", "Electric Field", 800, 800);
-        fieldView.SetCanvas(canvas1);
-        fieldView.Plot("emag", "colz");
-    }
-
     if (debug) {
       pumaModel.PrintRange();
       pumaModel.PrintMaterials();
+    }
+
+    std::cout << "Model Initialized \n";
+
+    //Visualize field
+    if (plotting) {
+        ViewField fieldView(&pumaModel);
+        fieldView.SetPlane(0, -1, 0, 0, 0, 0); //xz plane 
+        fieldView.SetArea(-4, 0, 4, 6.5); //[cm]
+        fieldView.SetVoltageRange(-1700., 0.);
+        
+        TCanvas* cf = new TCanvas("cf", "Electric Field", 800, 800);
+        fieldView.SetCanvas(cf);
+        fieldView.Plot("emag", "colz");
     }
 
     //Define gas medium
@@ -90,28 +91,71 @@ int main() {
       gas.GenerateGasTable(5, false);
       gas.WriteGasFile("argon_table.gas");
     } 
-    gas.Initialise(true);
+    gas.Initialise(false); // false -> non-verbose output 
 
-    //Attatch medium to PUMA model
-    pumaModel.SetMedium(4, &gas);
+    std::cout << "Gas Initialized \n";
 
-    if (debug) {
-      // To view e+ velocity
+    if (debug) { // ---- this part causes seg error, why? ---- //
+      //To view e+ velocity
       ViewMedium mediumView;
       mediumView.SetMedium(&gas);
       mediumView.PlotElectronVelocity('e');
     }
 
-    // //Set up a sensor
-    // Sensor sensor;
-    // sensor.AddComponent(&pumaModel);
-    // sensor.SetArea(-5, -5, -16, 5, 5, 7); //[cm]
+    std::cout << "ViewMedium Initialized \n";
 
-    // if (debug) {
-    //   std::cout << "Sensor Initialized \n";
-    // }
+    //Attatch medium to PUMA model
+    pumaModel.SetGas(&gas);
+
+    //Set up a sensor
+    Sensor sensor;
+    sensor.AddComponent(&pumaModel);
+    sensor.SetArea(-3, -3, -15, 3, 3, 5); //[cm] EXACT area
+
+    std::cout << "Sensor Initialized \n";
+
+    // Set up particle tracking using TrackHeed
+    TrackHeed trackHeed;
+    trackHeed.SetParticle("e-");  // Electron
+    trackHeed.SetSensor(&sensor);
+
+    std::cout << "Trackheed Initialized \n";
   
+    //Visualization of drift - setup
+    ViewDrift driftView1;
+    driftView1.Clear();
+    TCanvas* cD = new TCanvas("cD", "Drift View", 800, 800);
+    driftView1.SetCanvas(cD);
+    driftView1.SetArea(-4.5, -4.5, 0, 4.5, 4.5, 5);  // Manually setting plot limits
 
+    std::cout << "DriftView Initialized \n";
+
+    int nRuns = 5;
+    for (int i = 0; i < nRuns; i++) {
+        // Simulate a positron track at random starting position from my function
+        auto [x0, y0] = randInCircle();
+        double z0 = 43.2; //slight offset
+        std::cout << "x0, y0, z0: " << x0 << ", " << y0 << ", " << z0 << std::endl;
+        // double energy = 1e6;  // 1 MeV positron
+        // trackHeed.NewTrack(x0, y0, z0, 0, 0, 1, energy);
+
+    //     DriftLineRKF drift;
+    //     drift.SetSensor(&sensor);
+    //     drift.EnablePlotting(&driftView1);  
+    
+    //     // Retrieve ionization clusters and drift electrons
+    //     double xc, yc, zc, tc;
+    //     int nc, nsec;
+    //     double ec, esec;
+    //     while (trackHeed.GetCluster(xc, yc, zc, tc, nc, nsec, ec, esec)) {
+    //         std::cout << "Cluster at (" << xc << ", " << yc << ", " << zc << ")\n";
+    //         for (int i = 0; i < nc; ++i) {
+    //             drift.DriftPositron(xc, yc, zc, tc);
+    //         }
+    //     }
+    }
+
+    // driftView1.Plot();
 
 
 
