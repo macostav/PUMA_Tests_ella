@@ -75,7 +75,7 @@ int main() {
         std::cout << "Gas table loaded successfully." << std::endl;
     }
 
-    argon.Initialise(true);
+    argon.Initialise(false); // false -> non-verbose output
 
     // To view e+ velocity
     ViewMedium mediumView;
@@ -100,7 +100,7 @@ int main() {
     driftView.SetCanvas(cD);
     driftView.SetArea(0, 0, 0, 5, 5, 10);  // Manually setting plot limits
 
-    int nRuns = 45;
+    int nRuns = 150;
     for (int i = 0; i < nRuns; i++) {
         // Simulate a positron track at random starting position from my function
         auto [x0, y0] = randInCircle();

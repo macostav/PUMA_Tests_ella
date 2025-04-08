@@ -1,0 +1,55 @@
+# Write to file called dielectric_py.txt ; mplist dielectric file for material domain assignment from COMSOL
+
+# matls: (keep this associative order in arrays)
+# stainless steel [0]
+# gold [1]
+# copper [2]
+# kanthal cuprothal [3]
+# LXe [4]
+# fr-4 [5]
+
+numMatls = "6"
+diConsts = ["1e10", "6.9", "1e10", "2.5", "1", "2.1"] #in order as above
+numDomains = "3863"
+numDomainsInt = 3863
+
+file = open("dielectric_py.txt", "w") #open if doesnt exist
+
+file.write(numMatls + "\n")
+
+for const in diConsts:
+    file.write(const + " ")
+
+file.write("\n" + numDomains + "\n")
+
+domainFile = open("COMSOl_materials_list.txt")
+lines = domainFile.readlines() #lines[0] = stainless steel ... lines[5] = fr-4
+
+domainMatlPairs = []
+for i in range(len(lines)): 
+    splitLineComma = [x.strip() for x in lines[i].split(", ")]
+
+    domainsToAdd = []
+
+    for item in splitLineComma:
+        item = item.replace("–", "-")  # Replace en dash with regular hyphen
+        if '-' in item:  
+            start, end = map(int, item.split('-'))  # Convert to integers
+            domainsToAdd.extend(range(start, end + 1))  # Add range of numbers
+        else:
+            domainsToAdd.append(int(item))  # Convert single numbers
+
+    # print(domainsToAdd)
+
+    for domain in range(len(domainsToAdd)):
+        tuple = (domainsToAdd[domain], i)
+        domainMatlPairs.append(tuple)
+
+domainMatlPairs.sort()
+# print(domainMatlPairs)    
+
+for tuple in domainMatlPairs:
+    (domain, matl) = tuple
+    file.write(str(domain) + " " + str(matl) + "\n")
+
+file.close()
