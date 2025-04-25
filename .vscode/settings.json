@@ -74,6 +74,9 @@
         "cinttypes": "cpp",
         "typeinfo": "cpp",
         "TESTEST.C": "cpp",
-        "ElectronDrift_DriftLineRKF_Test.C": "cpp"
+        "ElectronDrift_DriftLineRKF_Test.C": "cpp",
+        "DriftLineRKF_Argon.C": "cpp",
+        "DriftLineRKF_Test.C": "cpp",
+        "DriftLineRKF_LXe.C": "cpp"
     }
 }

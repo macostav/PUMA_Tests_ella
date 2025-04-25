@@ -85,12 +85,12 @@ int main() {
   MediumMagboltz gas;
   gas.SetTemperature(293.15);
   gas.SetPressure(760.0);
-  gas.SetComposition("Ar", 100.);
-  gas.LoadIonMobility("IonMobility_Ar+_Ar.txt");
+  gas.SetComposition("Xe", 100.);
+  gas.LoadIonMobility("IonMobility_Xe+_P32_Xe.txt");
 
-  if (!gas.LoadGasFile("argon_table.gas")) {
+  if (!gas.LoadGasFile("xenon_table.gas")) {
     gas.GenerateGasTable(5, false);
-    gas.WriteGasFile("argon_table.gas");
+    gas.WriteGasFile("xenon_table.gas");
   }
   gas.Initialise(false);
   std::cout << "Gas Initialized \n";
