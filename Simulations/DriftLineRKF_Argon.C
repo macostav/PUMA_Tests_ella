@@ -137,7 +137,7 @@ int main() {
   if (plotting) drift.EnablePlotting(driftView1);
 
   //Histogram for e- speed
-  TH1F* hSpeed = new TH1F("hSpeed", "Electron Drift Speeds;Speed [cm/#mus];Counts", 100, 0, 1); // adjust range as needed
+  TH1F* hSpeed = new TH1F("hSpeed", "Electron Drift Speeds;Speed [cm/microsecond];Counts", 100, 0, 1); // adjust range as needed
 
   // Drift loop
   int nRuns = 200;
