@@ -44,7 +44,7 @@ int main() {
     TApplication app("app", nullptr, nullptr);
     
     ComponentComsol platesModel;
-    platesModel.Initialise("/home/emajkic/COMSOL_Files/minimal_mesh1.mphtxt", "/home/emajkic/COMSOL_Files/minimal_dielectric_dat.txt", "/home/emajkic/COMSOL_Files/minimal_potential1.txt", "m");
+    platesModel.Initialise("/home/macosta/PUMA/emma_work/PUMA/Simulations/COMSOL/SmallVersions/minimal_mesh1.mphtxt", "/home/macosta/PUMA/emma_work/PUMA/Simulations/COMSOL/SmallVersions/minimal_dielectric_dat.txt", "/home/macosta/PUMA/emma_work/PUMA/Simulations/COMSOL/SmallVersions/minimal_potential1.txt", "m");
 
     // std::cout << "Initialized model" << std::endl;
 
