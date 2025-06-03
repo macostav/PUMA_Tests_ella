@@ -44,9 +44,11 @@ int main() {
     TApplication app("app", nullptr, nullptr);
     
     ComponentComsol platesModel;
-    platesModel.Initialise("/home/macosta/PUMA/emma_work/PUMA/Simulations/COMSOL/SmallVersions/minimal_mesh1.mphtxt","/home/macosta/PUMA/emma_work/PUMA/Simulations/COMSOL/SmallVersions/minimal_dielectric_dat.txt" ,"/home/macosta/ella_work/PUMA_Tests/Simulations/Comsol_Testing_Miguel/minimal_potential1.txt", "m");
+    platesModel.Initialise("/home/macosta/ella_work/PUMA_Tests/Simulations/Comsol_Testing_Miguel/good_mesh.mphtxt","/home/macosta/PUMA/emma_work/PUMA/Simulations/COMSOL/SmallVersions/minimal_dielectric_dat.txt" ,"/home/macosta/ella_work/PUMA_Tests/Simulations/Comsol_Testing_Miguel/good_potential1.txt", "m");
 
+    // File that works fine: /home/macosta/PUMA/emma_work/PUMA/Simulations/COMSOL/SmallVersions/minimal_mesh1.mphtxt
     // File that causes issues: /home/macosta/ella_work/PUMA_Tests/Simulations/Comsol_Testing_Miguel/minimal_mesh1_finer.mphtxt
+    // /home/macosta/ella_work/PUMA_Tests/Simulations/Comsol_Testing_Miguel/working_mesh.mphtxt
     
     // std::cout << "Initialized model" << std::endl;
 
