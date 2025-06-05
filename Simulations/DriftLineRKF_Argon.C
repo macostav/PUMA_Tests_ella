@@ -55,9 +55,9 @@ int main() {
   // Load COMSOL model
   ComponentComsol pumaModel;
   pumaModel.Initialise(
-      "/data/emajkic/mesh_export_feb21.mphtxt",
-      "/home/emajkic/PUMA_Tests/Simulations/dielectric_py.txt",
-      "/data/emajkic/data_export_feb21.txt", "mm");
+      "/home/macosta/PUMA/miguel_work/Voltage_Pressure_Sims/Comsol_Files/mesh.mphtxt",
+      "/home/macosta/ella_work/PUMA_Tests/Simulations/dielectric_py.txt",
+      "/home/macosta/PUMA/miguel_work/Voltage_Pressure_Sims/Comsol_Files/potential_1603.txt", "mm");
 
   if (debug) {
     pumaModel.PrintRange();
