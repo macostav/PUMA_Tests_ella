@@ -77,6 +77,7 @@
         "ElectronDrift_DriftLineRKF_Test.C": "cpp",
         "DriftLineRKF_Argon.C": "cpp",
         "DriftLineRKF_Test.C": "cpp",
-        "DriftLineRKF_LXe.C": "cpp"
+        "DriftLineRKF_LXe.C": "cpp",
+        "voltage_pressure_simulation.C": "cpp"
     }
 }
